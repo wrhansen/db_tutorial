@@ -34,3 +34,13 @@ This error is happening because *gcc* doesn't treat *const* in the same way that
 which would have to be used for _every_ single *const* statement in this code.
 
 I'll just stick with *clang* for now.
+
+# Testing
+
+To test, just run:
+
+```
+$ python3 test.py
+```
+
+It uses python's unittest library.
