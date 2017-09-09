@@ -1,7 +1,7 @@
 CC=clang
 CFLAGS=-Wall
 
-db:
+db: clean
 	$(CC) $(CFLAGS) -o db src/db.c
 
 clean:
