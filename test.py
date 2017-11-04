@@ -17,6 +17,11 @@ class DBTestCase(unittest.TestCase):
             output = proc.communicate(stdin)
         return output[0].split('\n')
 
+    @classmethod
+    def setUpClass(cls):
+        if os.path.exists('mydb.db'):
+            os.remove('mydb.db')
+
     def tearDown(self):
         if os.path.exists('mydb.db'):
             os.remove('mydb.db')
