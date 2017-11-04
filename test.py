@@ -102,6 +102,34 @@ class DBTestCase(unittest.TestCase):
                 'db > ',
             ])
 
+    def test_constants(self):
+        '''
+        This test will alert us when the constants are changed.
+        '''
+        self.assertEqual(
+            self.run_command(['.constants', '.exit']), [
+                'db > Constants:',
+                "ROW_SIZE: 293",
+                "COMMON_NODE_HEADER_SIZE: 6",
+                "LEAF_NODE_HEADER_SIZE: 10",
+                "LEAF_NODE_CELL_SIZE: 297",
+                "LEAF_NODE_SPACE_FOR_CELLS: 4086",
+                "LEAF_NODE_MAX_CELLS: 13",
+                "db > ",
+            ])
+
+    def test_tree_print(self):
+        script = [
+            f'insert #{i} user#{i} person#{i}@example.com' for i in (3, 1, 2)
+        ]
+        script.extend(['.btree', '.exit'])
+        self.assertEqual(
+            self.run_command(script), [
+                'db > Executed.', 'db > Executed.', 'db > Executed.',
+                'db > Tree:', 'leaf (size 3)', '  - 0 : 3', '  - 1 : 1',
+                '  - 2 : 2', 'db > '
+            ])
+
 
 if __name__ == '__main__':
     unittest.main()
