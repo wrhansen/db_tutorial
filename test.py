@@ -126,8 +126,37 @@ class DBTestCase(unittest.TestCase):
         self.assertEqual(
             self.run_command(script), [
                 'db > Executed.', 'db > Executed.', 'db > Executed.',
-                'db > Tree:', 'leaf (size 3)', '  - 0 : 1', '  - 1 : 2',
-                '  - 2 : 3', 'db > '
+                'db > Tree:', 'leaf (size 3)', '  - 1', '  - 2', '  - 3',
+                'db > '
+            ])
+
+    def test_new_print_tree(self):
+        script = [
+            f'insert {i} user{i} person{i}@example.com' for i in range(14)
+        ]
+        script.extend(
+            ['.btree', 'insert 15 user15 person15@example.com', '.exit'])
+        self.assertEqual(
+            self.run_command(script)[14:], [
+                'db > Tree:',
+                '- internal (size 1)',
+                '  - leaf (size 7)',
+                '    - 1',
+                '    - 2',
+                '    - 3',
+                '    - 4',
+                '    - 5',
+                '    - 6',
+                '    - 7',
+                '- key 7',
+                '  - leaf (size 7)',
+                '    - 8',
+                '    - 9',
+                '    - 10',
+                '    - 11',
+                '    - 12',
+                '    - 14',
+                'db > Need to implement searching an internal node',
             ])
 
     def test_duplicate_keys(self):
